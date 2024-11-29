@@ -60,7 +60,7 @@
     {{end}}
     {{if .Data.Selftext}}
     <div class="post-content">
-      {{.Data.Selftext}}
+      {{markdownToHTML .Data.Selftext}}
     </div>
     {{end}}
     <a href="/comments{{.Data.Permalink}}" class="comments-link">View Comments</a>

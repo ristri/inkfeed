@@ -16,7 +16,7 @@
                             </div>
                         </div>
                         <div class="comment-content">
-                            {{.Body}}
+                            {{markdownToHTML .Body}}
                         </div>
                     </div>
                     {{if hasReplies .}}

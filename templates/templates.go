@@ -8,6 +8,9 @@ import (
 	"net/http"
 	"strings"
 	"time"
+
+	"github.com/gomarkdown/markdown"
+	"github.com/gomarkdown/markdown/parser"
 )
 
 type Templates struct {
@@ -19,6 +22,7 @@ func LoadTemplates() (*Templates, error) {
 		"formatTime":       formatTime,
 		"getNestedReplies": getNestedReplies,
 		"hasReplies":       hasReplies,
+		"markdownToHTML":   markdownToHTML,
 	}
 
 	tmpl := template.New("").Funcs(funcMap)
@@ -63,10 +67,10 @@ func (t *Templates) HandleSubreddit() http.HandlerFunc {
 		}
 
 		subredditData := models.SubredditData{
-			Subreddit: subredditName,
-			IsTopSort: isTopSort,
-            TopSortType: params.Get("t"),
-			Response:  *data,
+			Subreddit:   subredditName,
+			IsTopSort:   isTopSort,
+			TopSortType: params.Get("t"),
+			Response:    *data,
 		}
 
 		w.Header().Set("Content-Type", "text/html")
@@ -135,6 +139,12 @@ func getNestedReplies(comment models.Comment) *models.CommentResponse {
 	}
 
 	return &response
+}
+
+func markdownToHTML(md string) template.HTML {
+    extensions := parser.CommonExtensions | parser.AutoHeadingIDs
+    p := parser.NewWithExtensions(extensions)
+    return template.HTML(markdown.ToHTML([]byte(md), p, nil))
 }
 
 func hasReplies(comment models.Comment) bool {
