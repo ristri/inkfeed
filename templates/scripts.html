@@ -1,0 +1,9 @@
+{{define "scripts"}}
+<script>
+  function changeFontSize(delta) {
+    const body = document.body;
+    const currentSize = parseInt(window.getComputedStyle(body).fontSize);
+    body.style.fontSize = (currentSize + delta) + 'px';
+  }
+</script>
+{{end}}

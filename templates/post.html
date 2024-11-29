@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{with index .Post.Data.Children 0}}{{.Data.Title}}{{end}} - Reddit E-ink View</title>
+  {{template "styles"}}
+  {{template "scripts"}}
+</head>
+
+<body>
+  <div class="controls">
+    <button onclick="changeFontSize(2)">A+</button>
+    <button onclick="changeFontSize(-2)">A-</button>
+  </div>
+
+  <a href="/r/{{.Subreddit}}" class="back-link">← Back to /r/{{.Subreddit}}</a>
+
+  {{with index .Post.Data.Children 0}}
+  <article class="post">
+    <h1 class="post-title">
+      {{.Data.Title}}
+    </h1>
+    <div class="post-meta">
+      Posted by {{.Data.Author}} |
+      {{formatTime .Data.Created}} |
+      Score: {{.Data.Score}}
+    </div>
+    {{if .Data.Thumbnail}}
+    {{if ne .Data.Thumbnail "self" }}
+    {{if ne .Data.Thumbnail "default" }}
+    <a href="{{.Data.URL}}"><img class="thumbnail" src="{{.Data.Thumbnail}}" alt="Post thumbnail"></a>
+    {{end}}
+    {{end}}
+    {{end}}
+<div class="post-content">
+  {{.Data.Selftext}}
+</div>
+  </article>
+  {{end}}
+
+  <section class="comments">
+    {{template "comments" .Comments.Data}}
+  </section>
+</body>
+
+</html>

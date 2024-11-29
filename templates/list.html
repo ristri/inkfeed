@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reddit E-ink View</title>
+  {{template "styles"}}
+  {{template "scripts"}}
+</head>
+
+<body>
+  <div class="controls">
+    <button onclick="changeFontSize(2)">A+</button>
+    <button onclick="changeFontSize(-2)">A-</button>
+  </div>
+
+  <h1>/r/{{.Subreddit}}</h1>
+
+  <div class="top-bar">
+    <nav class="top-nav">
+      <a href="/r/{{.Subreddit}}/hot">Hot</a>
+      <a href="/r/{{.Subreddit}}/new">New</a>
+      <a href="/r/{{.Subreddit}}/top">Top</a>
+      <a href="/r/{{.Subreddit}}/rising">Rising</a>
+    </nav>
+
+    {{if .IsTopSort}}
+    <form class="top-select-form" action="/r/{{.Subreddit}}/top/">
+      <select name="t" method>
+        <option value="all" {{if eq .TopSortType "all" }}selected{{end}}>All Time</option>
+        <option value="year" {{if eq .TopSortType "year" }}selected{{end}}>This Year</option>
+        <option value="month" {{if eq .TopSortType "month" }}selected{{end}}>This Month</option>
+        <option value="week" {{if eq .TopSortType "week" }}selected{{end}}>This Week</option>
+        <option value="day" {{if eq .TopSortType "day" }}selected{{end}}>Today</option>
+        <option value="now" {{if eq .TopSortType "now" }}selected{{end}}>Now</option>
+      </select>
+      <button type="submit">Sort</button>
+    </form>
+    {{end}}
+  </div>
+
+  {{range .Response.Data.Children}}
+  <article class="post">
+    <h2 class="post-title">
+      <a href="{{.Data.URL}}" target="_blank">{{.Data.Title}}</a>
+    </h2>
+    <div class="post-meta">
+      Posted by {{.Data.Author}} |
+      {{formatTime .Data.Created}} |
+      Score: {{.Data.Score}} |
+      Comments: {{.Data.NumComments}}
+    </div>
+    {{if .Data.Thumbnail}}
+    {{if ne .Data.Thumbnail "self" }}
+    {{if ne .Data.Thumbnail "default" }}
+    <img class="thumbnail" src="{{.Data.Thumbnail}}" alt="Post thumbnail">
+    {{end}}
+    {{end}}
+    {{end}}
+    {{if .Data.Selftext}}
+    <div class="post-content">
+      {{.Data.Selftext}}
+    </div>
+    {{end}}
+    <a href="/comments{{.Data.Permalink}}" class="comments-link">View Comments</a>
+  </article>
+  {{end}}
+
+</body>
+
+</html>

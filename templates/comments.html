@@ -1,0 +1,33 @@
+{{define "comments"}}
+    {{range .Children}}
+        {{with .Data}}
+            {{if and (ne .Author "") (ne .Author "[deleted]")}}
+                <article class="comment-container">
+                    <input type="checkbox" id="toggle-{{.ID}}" class="comment-toggle">
+                    <div class="comment">
+                        <div class="comment-header">
+                            {{if hasReplies .}}
+                                <label for="toggle-{{.ID}}" class="comment-toggle-label">
+                                    <span class="toggle-icon"></span>
+                                </label>
+                            {{end}}
+                            <div class="comment-meta">
+                                {{.Author}} | Score: {{.Score}} | {{formatTime .Created}}
+                            </div>
+                        </div>
+                        <div class="comment-content">
+                            {{.Body}}
+                        </div>
+                    </div>
+                    {{if hasReplies .}}
+                        {{with getNestedReplies .}}
+                            <div class="nested-comments">
+                                {{template "comments" .Data}}
+                            </div>
+                        {{end}}
+                    {{end}}
+                </article>
+            {{end}}
+        {{end}}
+    {{end}}
+{{end}}
