@@ -85,178 +85,198 @@
     }
   }
 
-    body {
-        font-family: Georgia, serif;
-        line-height: 1.2;
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 1rem;
-        background: #fff;
-        color: #000;
-    }
+  body {
+    font-family: Georgia, serif;
+    line-height: 1.2;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+    background: #fff;
+    color: #000;
+  }
 
-    /* Comment structure */
-    .comment-container {
-        position: relative;
-        margin-bottom: 1rem;
+  /* Comment structure */
+  .comment-container {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+
+  .comment {
+    padding: 0.5rem;
+    border: 1px solid #000;
+    background: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .comment-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .nested-comments {
+    margin-left: 2rem;
+    border-left: 2px solid #ccc;
+    padding-left: 1rem;
+  }
+
+  /* Toggle functionality */
+  .comment-toggle {
+    display: none;
+  }
+
+  .comment-toggle-label {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  .toggle-icon {
+    position: relative;
+    width: 10px;
+    height: 10px;
+  }
+
+  .toggle-icon::before,
+  .toggle-icon::after {
+    content: '';
+    position: absolute;
+    background-color: #666;
+    transition: transform 0.2s ease;
+  }
+
+  .toggle-icon::before {
+    width: 10px;
+    height: 2px;
+    top: 4px;
+    left: 0;
+  }
+
+  .toggle-icon::after {
+    width: 2px;
+    height: 10px;
+    left: 4px;
+    top: 0;
+  }
+
+  /* Collapse state */
+  .comment-toggle:checked~.nested-comments {
+    display: none;
+  }
+
+  .comment-toggle:checked+.comment .comment-toggle-label .toggle-icon::after {
+    transform: rotate(90deg);
+    opacity: 0;
+  }
+
+  /* Comment content styles */
+  .comment-meta {
+    font-size: 0.9rem;
+    color: #666;
+  }
+
+  .comment-content {
+    margin-top: 0.3rem;
+    word-wrap: break-word;
+  }
+
+  /* Dark mode support */
+  @media (prefers-color-scheme: dark) {
+    body {
+      background: #000;
+      color: #fff;
     }
 
     .comment {
-        padding: 0.5rem;
-        border: 1px solid #000;
-        background: #fff;
-        margin-bottom: 0.5rem;
-    }
-
-    .comment-header {
-        display: flex;
-        align-items: baseline;
-        gap: 0.5rem;
-    }
-
-    .nested-comments {
-        margin-left: 2rem;
-        border-left: 2px solid #ccc;
-        padding-left: 1rem;
-    }
-
-    /* Toggle functionality */
-    .comment-toggle {
-        display: none;
+      background: #111;
+      border-color: #333;
     }
 
     .comment-toggle-label {
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 20px;
-        height: 20px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        flex-shrink: 0;
-    }
-
-    .toggle-icon {
-        position: relative;
-        width: 10px;
-        height: 10px;
+      border-color: #444;
     }
 
     .toggle-icon::before,
     .toggle-icon::after {
-        content: '';
-        position: absolute;
-        background-color: #666;
-        transition: transform 0.2s ease;
+      background-color: #999;
     }
 
-    .toggle-icon::before {
-        width: 10px;
-        height: 2px;
-        top: 4px;
-        left: 0;
+    .nested-comments {
+      border-left-color: #333;
     }
 
-    .toggle-icon::after {
-        width: 2px;
-        height: 10px;
-        left: 4px;
-        top: 0;
-    }
-
-    /* Collapse state */
-    .comment-toggle:checked ~ .nested-comments {
-        display: none;
-    }
-
-    .comment-toggle:checked + .comment .comment-toggle-label .toggle-icon::after {
-        transform: rotate(90deg);
-        opacity: 0;
-    }
-
-    /* Comment content styles */
     .comment-meta {
-        font-size: 0.9rem;
-        color: #666;
+      color: #999;
+    }
+  }
+
+  /* E-ink optimizations */
+  @media (monochrome) {
+    .comment-toggle-label {
+      border-width: 2px;
     }
 
-    .comment-content {
-        margin-top: 0.3rem;
-        word-wrap: break-word;
+    .toggle-icon::before,
+    .toggle-icon::after {
+      background-color: #000;
+      width: 3px;
+      height: 12px;
     }
 
-    /* Dark mode support */
-    @media (prefers-color-scheme: dark) {
-        body {
-            background: #000;
-            color: #fff;
-        }
-
-        .comment {
-            background: #111;
-            border-color: #333;
-        }
-
-        .comment-toggle-label {
-            border-color: #444;
-        }
-
-        .toggle-icon::before,
-        .toggle-icon::after {
-            background-color: #999;
-        }
-
-        .nested-comments {
-            border-left-color: #333;
-        }
-
-        .comment-meta {
-            color: #999;
-        }
+    .nested-comments {
+      border-left-width: 3px;
     }
+  }
 
-    /* E-ink optimizations */
-    @media (monochrome) {
-        .comment-toggle-label {
-            border-width: 2px;
-        }
+  /* Hover states */
+  .comment-toggle-label:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
 
-        .toggle-icon::before,
-        .toggle-icon::after {
-            background-color: #000;
-            width: 3px;
-            height: 12px;
-        }
-
-        .nested-comments {
-            border-left-width: 3px;
-        }
-    }
-
-    /* Hover states */
+  @media (prefers-color-scheme: dark) {
     .comment-toggle-label:hover {
-        background-color: rgba(0, 0, 0, 0.05);
+      background-color: rgba(255, 255, 255, 0.05);
     }
+  }
 
-    @media (prefers-color-scheme: dark) {
-        .comment-toggle-label:hover {
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-    }
+  .top-bar {
+    margin: 1rem 0 1rem 0;
+  }
 
-    .top-bar {
-      margin: 1rem 0 1rem 0;
-    }
+  .top-nav {
+    display: inline;
+  }
 
-    .top-nav {
-      display: inline;
-    }
+  .top-select-form {
+    display: inline;
+    margin-left: 1rem;
+  }
 
-    .top-select-form {
-      display: inline;
-      margin-left: 1rem;
-    }
-    
+  .pagination {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+
+  .pagination a {
+    text-decoration: none;
+    padding: 8px 16px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    color: #007bff;
+  }
+
+  .pagination a.disabled {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: #e9ecef;
+  }
 </style>
 {{end}}

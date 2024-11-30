@@ -28,12 +28,13 @@
     {{if .IsTopSort}}
     <form class="top-select-form" action="/r/{{.Subreddit}}/top/">
       <select name="t" method>
-        <option value="all" {{if eq .TopSortType "all" }}selected{{end}}>All Time</option>
-        <option value="year" {{if eq .TopSortType "year" }}selected{{end}}>This Year</option>
-        <option value="month" {{if eq .TopSortType "month" }}selected{{end}}>This Month</option>
-        <option value="week" {{if eq .TopSortType "week" }}selected{{end}}>This Week</option>
-        <option value="day" {{if eq .TopSortType "day" }}selected{{end}}>Today</option>
-        <option value="now" {{if eq .TopSortType "now" }}selected{{end}}>Now</option>
+        {{ $type := .Params.Get "t" }}
+        <option value="all" {{if eq $type "all" }}selected{{end}}>All Time</option>
+        <option value="year" {{if eq $type "year" }}selected{{end}}>This Year</option>
+        <option value="month" {{if eq $type "month" }}selected{{end}}>This Month</option>
+        <option value="week" {{if eq $type "week" }}selected{{end}}>This Week</option>
+        <option value="day" {{if eq $type "day" }}selected{{end}}>Today</option>
+        <option value="now" {{if eq $type "now" }}selected{{end}}>Now</option>
       </select>
       <button type="submit">Sort</button>
     </form>
@@ -67,6 +68,29 @@
   </article>
   {{end}}
 
+  <div class="pagination">
+    {{ $timeType:= .Params.Get "t"}}
+    {{if .Response.Data.Before}}
+    {{if $timeType}}
+    {{$timeType}}
+    <a href="?t={{$timeType}}&before={{.Response.Data.Before}}&limit=25&count=25">← Previous</a>
+    {{else}}
+    <a href="?before={{.Response.Data.Before}}&limit=25&count=25">← Previous</a>
+    {{end}}
+    {{else}}
+    <a class="disabled">← Previous</a>
+    {{end}}
+  
+    {{if .Response.Data.After}}
+    {{if $timeType}}
+    <a href="?t={{$timeType}}&after={{.Response.Data.After}}&limit=25&count=25">Next →</a>
+    {{else}}
+    <a href="?after={{.Response.Data.After}}&limit=25&count=25">Next →</a>
+    {{end}}
+    {{else}}
+    <a class="disabled">Next →</a>
+    {{end}}
+  </div>
 </body>
 
 </html>

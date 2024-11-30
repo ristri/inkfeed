@@ -66,11 +66,16 @@ func (t *Templates) HandleSubreddit() http.HandlerFunc {
 			return
 		}
 
+		params.Del("before")
+		params.Del("after")
+		params.Del("limit")
+        params.Del("count")
+
 		subredditData := models.SubredditData{
-			Subreddit:   subredditName,
-			IsTopSort:   isTopSort,
-			TopSortType: params.Get("t"),
-			Response:    *data,
+			Subreddit: subredditName,
+			IsTopSort: isTopSort,
+			Params:    params,
+			Response:  *data,
 		}
 
 		w.Header().Set("Content-Type", "text/html")
@@ -142,9 +147,9 @@ func getNestedReplies(comment models.Comment) *models.CommentResponse {
 }
 
 func markdownToHTML(md string) template.HTML {
-    extensions := parser.CommonExtensions | parser.AutoHeadingIDs
-    p := parser.NewWithExtensions(extensions)
-    return template.HTML(markdown.ToHTML([]byte(md), p, nil))
+	extensions := parser.CommonExtensions | parser.AutoHeadingIDs
+	p := parser.NewWithExtensions(extensions)
+	return template.HTML(markdown.ToHTML([]byte(md), p, nil))
 }
 
 func hasReplies(comment models.Comment) bool {

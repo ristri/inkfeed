@@ -1,5 +1,7 @@
 package models
 
+import "net/url"
+
 type CommentData struct {
     Post      *RedditSubredditResponse
     Comments  *CommentResponse
@@ -22,7 +24,7 @@ type RedditSubredditResponse struct {
 type SubredditData struct {
 		Subreddit string
         IsTopSort bool
-		TopSortType string
+        Params url.Values
 		Response RedditSubredditResponse
 }
 
