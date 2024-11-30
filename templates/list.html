@@ -29,12 +29,12 @@
     <form class="top-select-form" action="/r/{{.Subreddit}}/top/">
       <select name="t" method>
         {{ $type := .Params.Get "t" }}
-        <option value="all" {{if eq $type "all" }}selected{{end}}>All Time</option>
-        <option value="year" {{if eq $type "year" }}selected{{end}}>This Year</option>
-        <option value="month" {{if eq $type "month" }}selected{{end}}>This Month</option>
-        <option value="week" {{if eq $type "week" }}selected{{end}}>This Week</option>
-        <option value="day" {{if eq $type "day" }}selected{{end}}>Today</option>
         <option value="now" {{if eq $type "now" }}selected{{end}}>Now</option>
+        <option value="day" {{if eq $type "day" }}selected{{end}}>Today</option>
+        <option value="week" {{if eq $type "week" }}selected{{end}}>This Week</option>
+        <option value="month" {{if eq $type "month" }}selected{{end}}>This Month</option>
+        <option value="year" {{if eq $type "year" }}selected{{end}}>This Year</option>
+        <option value="all" {{if eq $type "all" }}selected{{end}}>All Time</option>
       </select>
       <button type="submit">Sort</button>
     </form>
@@ -80,7 +80,7 @@
     {{else}}
     <a class="disabled">← Previous</a>
     {{end}}
-  
+
     {{if .Response.Data.After}}
     {{if $timeType}}
     <a href="?t={{$timeType}}&after={{.Response.Data.After}}&limit=25&count=25">Next →</a>
