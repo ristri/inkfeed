@@ -11,7 +11,24 @@ Inkfeed is a lightweight, alternative Reddit client specifically designed for e-
 - Uses Reddit's JSON API for content fetching
 
 ## Screenshots
-
+<div align="center">
+  <img src="./screenshots/inkfeed_kindle_sub.jpg?raw=true" alt="/r/cricket on a Kindle 10th generation" style="max-width: 100%; height: auto;">
+  <p style="text-align: center; font-style: italic; margin-top: 10px; margin-bottom: 30px;">
+    /r/cricket on a Kindle 10th generation
+  </p>
+</div>
+<div align="center">
+  <img src="./screenshots/inkfeed_kindle_comments.jpg?raw=true" alt="comments section on a Kindle 10th generation" style="max-width: 100%; height: auto;">
+  <p style="text-align: center; font-style: italic; margin-top: 10px; margin-bottom: 30px;">
+    Comments section on a Kindle 10th generation
+  </p>
+</div>
+<div align="center">
+  <img src="./screenshots/inkfeed_android_einkbro.jpg?raw=true" alt="/r/technology on an Android on EinkBro browser" style="max-width: 100%; height: auto;">
+  <p style="text-align: center; font-style: italic; margin-top: 10px; margin-bottom: 30px;">
+    /r/technology on an Android on EinkBro browser
+  </p>
+</div>
 
 ## Installation and Setup
 
